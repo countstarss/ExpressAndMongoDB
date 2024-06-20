@@ -8,9 +8,10 @@ const PORT = 9000 || process.env.PORT;
 
 app.use(express.static('public'));
 
+
 // 添加模板引擎
 app.use(expressLayouts);
-app.set('layout','layout/main');
+app.set('layout','layouts/main');
 app.set('view engine','ejs')
 
 // 导入路由

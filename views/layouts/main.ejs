@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= locals.title %></title>
+    <meta name="description" content="<%= locals.description %>" >
+    <!-- 因为已经指定了static文件夹，所以从public文件夹下开始写就可以了 -->
+    <link rel="stylesheet" href="/css/style.css">  
+    <script type="text/javascript" defer src="/js/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <%- include('../partials/header') %>
+        <main class="main">
+            <%- body %>   <!-- <%- body %>可以引用index.ejs中的内容 -->
+        </main>
+        <%- include('../partials/footer') %>
+    </div>
+    
+</body>
+</html>
