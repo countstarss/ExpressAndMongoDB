@@ -130,3 +130,53 @@
   module.exports = mongoose.model('Post',PostSchema);
   ```
 
+## 第五部分: commit 5: 获取并且渲染posts
+- 向数据库中插入数据 //使用insertMany方法
+  ``` js  //插入数据
+  function insertPostData() {
+    Post.insertMany([
+        {
+            title:"Buliding a blog",
+            body:"this is the body text",
+        },
+    ])
+  };
+  ```
+- 从数据库中找到数据并渲染
+  ``` js  //获取数据
+  router.get('',async (req,res) => {
+    const locals = {
+        title: "Express Blog",
+        description : "Simple blog create with NodeJs, express & MongoDB",
+        joke: "you are beautiful"
+    }
+
+    try{
+        const data = await Post.find();
+        res.render('home',{ locals,data });
+    }catch(error){
+        console.log(`Error: ${error}`);
+    }
+
+    res.render('home',{ locals });
+  });
+  ```
+- 使用ejs模板引擎渲染获取的数据
+  ``` js  //渲染数据
+  <% data.forEach(post => { %>
+    <li>
+        <a href="#">
+            <%= post.title %>
+            <span class="article-list_date"><%= post.createdAt.toDateString() %></span>
+        </a> 
+    </li>
+  <% }) %>
+  ```
+
+
+
+
+
+
+
+
