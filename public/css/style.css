@@ -302,13 +302,13 @@ img {
   border-radius: 5px;
 }
 
-#searchClose {
+/* #searchClose {
   position: absolute;
   top: 0;
   right: 0;
   color: var(--gray-light);
   padding: 15px;
-}
+} */
 
 #searchClose button{
   height: 40px;
@@ -320,8 +320,6 @@ img {
   margin: 10px;
   border-radius: 5px;
 }
-
-
 
 /*Dashboard Admin*/
 .admin-title {
