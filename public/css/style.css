@@ -6,10 +6,14 @@
   --gray-light: #E4E4E4;
   --red: #b30000;
   --font-size-base: 1rem;
+  /* 设定字体大小之后，文件能在一定范围内随窗口放大缩小 */
   --font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
   --font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
   --font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
   --border-radius: 10px;
+}
+::-webkit-scrollbar{
+  display: none;
 }
 
 body {
@@ -21,6 +25,7 @@ body {
   margin: 0;
 }
 
+/* 设置统一格式 */
 a { color: var(--black); }
 h1 { font-size: var(--font-size-xl); }
 h2 { font-size: var(--font-size-lg); }
@@ -33,7 +38,7 @@ input[type="search"],
 select,
 textarea {
   font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -41,3 +46,225 @@ textarea {
   margin-bottom: 1rem;
 }
 
+.btn {
+  background-color: var(--black);
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  padding: 10px 16px;
+  background-color: var(--red);
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* Layout */
+.container {
+  max-width: 982px;
+  margin: 0 auto;  /*居中*/
+  padding: 0 10px;
+}
+
+.main {
+  padding: 20px 0;
+}
+
+/* Hero-section */
+.hero-image {
+  max-width: 982px;
+  filter: drop-shadow(0px 44px 34px rgba(0,0,0,0.25));
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}
+
+/* Main header */
+.header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr; 
+  /* 定义了网格布局中每一列的宽度。
+  这里的 1fr 表示每一列的宽度为网格容器的剩余空间的相等份额。因此，
+  这一行代码意味着网格容器将分为两列，每一列的宽度都相等。 */
+  grid-template-rows: auto;
+  padding-top: 10px;
+  grid-template-areas: 
+  "logo button"
+  "menu menu"
+  ;
+  /* 使用grid-template-areas来规划布局 */
+}
+/* 当屏幕宽度较大时，让所有内容放置在一行，宽度较小时，放在两行 */
+@media only screen and (min-width:768px) {
+  .header {
+    grid-template-columns: auto 1fr auto; 
+    grid-template-areas: 
+    "logo menu button";
+  }
+}
+.header
+
+.header_logo {
+  grid-area: logo;
+  font-weight: 800;
+  font-size: 25px; /* 大小不变 */
+  text-decoration: none;
+}
+.header_logo:hover {
+  text-decoration: underline;
+}
+
+.header_nav {
+  grid-area: menu;
+  display: flex;
+  justify-content: center;
+}
+
+.header_button {
+  grid-area: button;
+  display: flex;
+  justify-content: end;
+}
+
+.header_button button {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  border: 0;
+  padding: 6px 12px;
+  background: none;
+  border-radius: var(--border-radius);
+  border: 2px solid transparent;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--black);
+}
+
+.header_button button:hover {
+  border: 2px solid var(--black);
+}
+
+/* Navigation */
+.header_nav ul{
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.header_nav ul a{
+  padding: 10px;
+  text-decoration: none;
+}
+
+.header_nav ul a:hover{
+  text-decoration: underline;
+}
+
+.header_nav ul a.active {
+  color: var(--gray); /* 点击变成灰色 */
+}
+
+/* Author - HomePage */
+.author {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.author_heading {
+  margin-top: 10px;
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+
+.author_body {
+  font-size: var(--font-size-md);
+  margin: 5px 0 30px 0;
+}
+
+/* home article List */
+.articles_heading {
+  margin-top: 3.5rem;
+  font-weight: 400;
+}
+
+.article_ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: clamp(1.31rem,calc(1.08rem + 0.12vw),1.25rem);
+  display: flex;
+  flex-direction: column; /* 从上到下 按列排布 */
+}
+
+.article-list_date {
+  font-size: var(--font-size-base);
+  color: var(--gray);
+  width: 100px;
+  display: inline-block;
+}
+
+.article_ul li a{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  margin: 18px 10px;
+}
+
+@media only screen and (min-width:768px) {
+  .article_ul li a{
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .article-list_date {
+    text-align: right;
+  }
+}
+.article_ul li {
+  font-size: 18px;
+  cursor: pointer;
+  transition: filter 0.1s;
+}
+
+.article_ul li:not(:last-child) {
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.article_ul li:hover {
+  filter: none;
+}
+
+.article_ul li :hover {
+  filter: blur(1px);
+}
+.article_ul:hover li:hover {
+  filter: none;
+}
+
+.pagination {
+  font-size: 1.3rem;
+  color: var(--gray);
+  text-decoration: none;
+  margin-top: 40px;
+  display: inline-block;
+}
+
+.pagination:hover {
+  color: var(--black);
+}
+
+/* Footer */
+.footer {
+  margin: 3rem;
+  text-align: center;
+}

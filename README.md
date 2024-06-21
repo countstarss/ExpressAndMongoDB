@@ -22,10 +22,10 @@
 ## 第一部分: commit 1
 - 初始化项目，添加第三方库
 - 在pachage.json中配置命令
-``` js   // 自定义命令
-    npm run dev    // "nodemon app.js"
-    npm start      // "run app.js"
-```
+  ``` js   // 自定义命令
+  npm run dev    // "nodemon app.js"
+  npm start      // "run app.js"
+  ```
 - 在app.js中搭建起最小的app
 - 添加路由，分离到文件中，导出路由
 - 在app.js中引用路由
@@ -50,7 +50,6 @@
   - ejs引用
     - <%- body %>           引用模板内容
     - <%= locals.title %>   引用props
-
 - ejs组件的使用
   - 在views中新建与layouts同级的文件夹partials，里面创建组件ejs
     - 使用include找到组件位置实现引用 <%- include('../partials/header') %>   // ejsesc 是引用的快捷键
@@ -64,3 +63,26 @@
   - author
   - article
 
+
+## 第三部分: commit 3
+- 从GoogleFont引入字体
+- 预定义css样式
+  ``` css //定义css样式
+  :root {
+    --black: #1c1c1c;
+    --gray: #7E7E7E;
+    --gray-light: #E4E4E4;
+    --red: #b30000;
+    --font-size-base: 1rem;
+    --font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+    --font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+    --font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
+    --border-radius: 10px;
+  }
+  ```
+  - 自定义css样式的使用
+  ``` css //var(定义的样式名字)
+  color: var(--black);
+  font-size: var(--font-size-base);
+  ```
+- 
