@@ -64,7 +64,7 @@
   - article
 
 
-## 第三部分: commit 3
+## 第三部分: commit 3 
 - 从GoogleFont引入字体
 - 预定义css样式
   ``` css //定义css样式
@@ -85,4 +85,48 @@
   color: var(--black);
   font-size: var(--font-size-base);
   ```
-- 
+- 完成主页的样式
+
+## 第四部分: commit 4
+- 添加弹出的搜索框
+- 在mongoDB cloud中添加MongoDB数据库
+  ``` shell 不同环境下使用mongoDB的connect字符串
+  vscode:
+  mongodb+srv://luke:ywEC1qDLyAMmYEuj@exprossblog.theaxyk.mongodb.net/
+
+  shell:  # homebrew : brew install mongosh
+  mongosh "mongodb+srv://exprossblog.theaxyk.mongodb.net/" --apiVersion 1 --username luke --password ywEC1qDLyAMmYEuj
+
+  NodeJs:
+  mongodb+srv://luke:ywEC1qDLyAMmYEuj@exprossblog.theaxyk.mongodb.net/?retryWrites=true&w=majority&appName=ExprossBlog
+  ```
+  最终采用vscode方法
+- 在server下新建confog文件夹，创建db.js
+- 在db.js中使用mongoose连接mongoDB
+  - 成功链接数据库
+- 在server下新建models文件夹，创建posts.js
+  - 创建并且导出模型
+  ``` js  //创建&导出模型
+  const mongoose = require('mongoose');
+  const Schema = mongoose.Schema;
+  const PostSchema = new Schema({
+      title:{
+          type:String,
+          require:true
+      },
+      body:{
+          type:String,
+          require:true
+      },
+      createdAt:{
+          type:Date,
+          default:Date.now()
+      },
+      updatedAt:{
+          type:Date,
+          default:Date.now()
+      }
+  })
+  module.exports = mongoose.model('Post',PostSchema);
+  ```
+

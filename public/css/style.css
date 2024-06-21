@@ -151,6 +151,10 @@ img {
   border: 2px solid var(--black);
 }
 
+.searchBtn:focus-within input{
+  /* visibility: visible; */
+  /* display:flex; */
+}
 /* Navigation */
 .header_nav ul{
   list-style-type: none;
@@ -267,4 +271,68 @@ img {
 .footer {
   margin: 3rem;
   text-align: center;
+}
+
+/* SearchBar */
+
+.searchBar {
+  visibility: hidden;
+  transform: translateY(-100px);
+  background-color: rgba(0,0,0,0.85);
+  padding: 4px 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.searchBar.open {
+  transform: translateY(0px);
+  transition: transform 0.1s;
+}
+
+.searchBar input {
+  height: 40px;
+  width: 900px;
+  line-height: 40px;
+  margin: 10px;
+  padding: 0;
+  padding-left: 10px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+#searchClose button{
+  height: 40px;
+  width: 60px;
+  position: absolute;
+  top: 4px;
+  right: 110px;
+  color: var(--gray);
+  margin: 10px;
+  border-radius: 5px;
+}
+
+
+
+/*Dashboard Admin*/
+.admin-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-post {
+  padding: 0;
+  margin: 0;
+}
+
+.admin-post-controls form {
+  display: inline-block;
+}
+
+.admin-post-controls .btn {
+  display: inline-block;
+  background-color: var(--black);
+  color: var(--gray-light);
 }
