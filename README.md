@@ -261,5 +261,11 @@
   - 如果有，构建jwt解码器，解码userId,因为创建token的时候就是用的userId，这个是自动生成的并且唯一。
 - 把authMiddleware放到需要check地方的参数里
 
-
+## 第九部分: commit 9: 创建新帖子
+- 构建dashBoard
+- 添加帖子
+  - 每个路由都需要一个get和一个post方法
+  - get用来渲染这个页面，post用来完成功能
+  - get是显式的，而post的信息不会暴露出来
+- 重构了一下路由，把admin路由在添加的时候写成'/',好让和home的代码风格统一，只需要在get和重定向的时候前面多写一个前缀admin。
 

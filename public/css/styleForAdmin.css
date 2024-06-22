@@ -47,13 +47,16 @@ textarea {
 }
 
 .btn {
-  background-color: var(--black);
+  /* width: 50px; */
+  height: 30px;
+  line-height: 30px;
   border: none;
   color: white;
-  padding: 16px 32px;
+  padding: auto 20px;
   text-decoration: none;
-  margin: 4px 2px;
+  margin: auto 10px;
   cursor: pointer;
+  background-color: var(--black);
 }
 
 .btn-delete {
@@ -268,10 +271,10 @@ img {
   margin: 3rem auto 2rem;
   text-align: center;
 
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
-  left: 50%; 
-  transform: translate(-50%, -50%); 
+  left: 50%;  */
+  /* transform: translate(-50%, -50%);  */
 }
 
 
@@ -280,7 +283,27 @@ img {
   margin: 4rem auto;
 }
 
-.btn {
+.login .button {
+  background-color: var(--black);
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+}
+.register .button {
+  background-color: var(--black);
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
   width: 100%;
   align-items: center;
   text-align: center;
@@ -294,23 +317,39 @@ img {
 
 
 /*Dashboard Admin*/
-.admin-title {
+.admin-title  {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.admin-post {
+.admin-posts {
   padding: 0;
   margin: 0;
+}
+
+.admin-posts .post-title {
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .admin-post-controls form {
   display: inline-block;
 }
 
+.admin-post-controls i {
+  margin-right: 30px;
+}
 .admin-post-controls .btn {
   display: inline-block;
   background-color: var(--black);
   color: var(--gray-light);
+  padding: 0 10px;
+}
+
+.admin-posts li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
 }
