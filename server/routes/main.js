@@ -28,7 +28,7 @@ router.get('', async (req, res) => {
         const nextPage = parseInt(page) + 1;
         const hasNextPage = nextPage <= Math.ceil(count / perPage);
         // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
-        res.render('home', {
+        res.render('main/home', {
             locals,
             data,
             current: page,
@@ -63,7 +63,7 @@ router.get('/blog', async (req, res) => {
         const nextPage = parseInt(page) + 1;
         const hasNextPage = nextPage <= Math.ceil(count / perPage);
         // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
-        res.render('blog', {
+        res.render('main/blog', {
             data,
             current: page,
             nextPage: hasNextPage ? nextPage : null,
@@ -90,7 +90,7 @@ router.get('/post/:id', async (req, res) => {
             description: "Simple Blog created with NodeJs, Express & MongoDb.",
         }
 
-        res.render('post', {
+        res.render('main/post', {
             locals,
             data,
             currentRoute: `/post/${slug}`
@@ -126,7 +126,7 @@ router.post('/search', async (req, res) => {
         })
         console.log(searchTerm);
         // render是指渲染的目标🎯，这里为了避免混淆，使用result
-        res.render("result",{
+        res.render("main/result",{
             data,
             locals
         });
@@ -223,12 +223,12 @@ router.post('/search', async (req, res) => {
 
 // About路由
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('main/about');
 })
 
 // Contact
 router.get('/contact', (req, res) => {
-    res.render('contact');
+    res.render('main/contact');
 })
 
 module.exports = router;

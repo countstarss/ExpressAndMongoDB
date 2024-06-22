@@ -27,8 +27,7 @@ app.set('view engine','ejs')
 
 // 导入路由
 app.use('/',require('./server/routes/main'));
-
-
+app.use('/admin',require('./server/routes/admin'));
 
 app.listen(PORT,() => {
     console.log(`app listening on port ${PORT}`);

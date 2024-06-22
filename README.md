@@ -231,6 +231,12 @@
   - 根据输入的内容，在mongoDB中查找符合条件的内容
   - 查找时使用正则来规范查找内容
 
-
+## 第七部分: commit 7: 添加admin登录功能
+- 增加admin路由
+- 添加admin的layout模板
+- 设置admin的layout
+- 添加admin login页面
+- 创建新的model users
+- 在admin.js路由文件中创建post方法用于admin登录
 
 
