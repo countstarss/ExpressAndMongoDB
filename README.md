@@ -239,4 +239,27 @@
 - 创建新的model users
 - 在admin.js路由文件中创建post方法用于admin登录
 
+## 第八部分: commit 8: 用户的加密和验证
+
+注意: post方法用来控制是否转到某页面，get方法用来渲染页面
+
+- 添加cookie-parser,用于获取、保存登录信息
+- 为app添加cookie-parser中间件
+- 添加connect-mongo作为mongoStore
+- 添加express-session
+- 设置session中间件
+- 重写register -- POST Register
+  - 在admin.js中添加bcrypt
+  - 在admin.js中添加jwt
+- 重写login -- POST Login
+  - 使用user._id 和 jwtSecret 生成token
+  - 将token保存起来
+  - 重定向到dashBoard，这是登录成功的标志
+- 写权限的中间件 authMiddleware
+  - 主要作用是验证token
+  - 先看有没有，没有直接报权限错误
+  - 如果有，构建jwt解码器，解码userId,因为创建token的时候就是用的userId，这个是自动生成的并且唯一。
+- 把authMiddleware放到需要check地方的参数里
+
+
 
