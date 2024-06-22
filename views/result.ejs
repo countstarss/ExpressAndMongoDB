@@ -1,6 +1,9 @@
-<section class="articles">
-    <h2 class="articles_heading">Lastest Posts</h2>
 
+<div class="author">
+    <h1 class="author_heading">Search Result</h1>
+</div>
+
+<section class="articles">
     <ul class="article_ul">
         <% data.forEach(post => { %>
             <li>
@@ -11,8 +14,4 @@
             </li>
         <% }) %>
     </ul>
-    
-    <% if (nextPage) { %>
-        <a href="/blog/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>
-    <% } %>
 </section>

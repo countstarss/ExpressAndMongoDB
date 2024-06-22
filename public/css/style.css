@@ -243,6 +243,7 @@ img {
 /* 下面实现的功能是鼠标悬浮时，除去当前的li，其他的li全部blur() */
 .article_ul li:hover {
   filter: none;
+  cursor: pointer;
 }
 .article_ul:hover li{
   filter: blur(1px);
@@ -265,8 +266,11 @@ img {
 
 /* Footer */
 .footer {
+
   margin: 3rem auto 2rem;
   text-align: center;
+  /* opacity: 0.6; */
+  transition: 0.5s;
   /* position: absolute;
   bottom: 0;
   left: 50%; 
@@ -274,6 +278,9 @@ img {
 }
 
 /* SearchBar */
+.searchBar .container {
+  position: relative;
+}
 
 .searchBar {
   visibility: hidden;
@@ -284,7 +291,6 @@ img {
   left: 0;
   right: 0;
 }
-
 .searchBar.open {
   transform: translateY(0px);
   transition: transform 0.1s;
@@ -296,7 +302,8 @@ img {
   line-height: 40px;
   margin: 10px;
   padding: 0;
-  padding-left: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -310,12 +317,18 @@ img {
   padding: 15px;
 } */
 
+/* #searchClose {
+  position: absolute;
+  left: 100px;
+  display: inline-block;
+} */
+
 #searchClose button{
   height: 40px;
   width: 60px;
   position: absolute;
-  top: 4px;
-  right: 110px;
+  top: -10px;
+  right: -5px;
   color: var(--gray);
   margin: 10px;
   border-radius: 5px;

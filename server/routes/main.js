@@ -6,74 +6,133 @@ const { render } = require('ejs');
 // Home路由
 router.get('', async (req, res) => {
     try {
-      const locals = {
-        title: "NodeJs Blog",
-        description: "Simple Blog created with NodeJs, Express & MongoDb."
-      }
-  
-      let perPage = 6;
-      let page = req.query.page || 1;
-      // 分页设计：每页显示5条，根据创建时间排序，显示最新的5条
-      // 如果后边还有,那么就显示上一页的链接，到第二页，依次增加
-    
-      // 最前面一页的数据
-      const data = await Post.aggregate([ { $sort: { createdAt: -1 } } ])
-      .skip(perPage * page - perPage)
-      .limit(perPage)
-      .exec();
-  
-      // Count is deprecated - please use countDocuments
-      // const count = await Post.count();
-      const count = await Post.countDocuments({});
-      const nextPage = parseInt(page) + 1;
-      const hasNextPage = nextPage <= Math.ceil(count / perPage);
-       // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
-      res.render('home', { 
-        locals,
-        data,
-        current: page,
-        nextPage: hasNextPage ? nextPage : null,
-        // nextPage只是一个页码，实际上提供数据的一直是data，根据page不同，提供不同的数据
-        currentRoute: '/'
-      });
-  
+        const locals = {
+            title: "NodeJs Blog",
+            description: "Simple Blog created with NodeJs, Express & MongoDb."
+        }
+
+        let perPage = 6;
+        let page = req.query.page || 1;
+        // 分页设计：每页显示5条，根据创建时间排序，显示最新的5条
+        // 如果后边还有,那么就显示上一页的链接，到第二页，依次增加
+
+        // 最前面一页的数据
+        const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+            .skip(perPage * page - perPage)
+            .limit(perPage)
+            .exec();
+
+        // Count is deprecated - please use countDocuments
+        // const count = await Post.count();
+        const count = await Post.countDocuments({});
+        const nextPage = parseInt(page) + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
+        res.render('home', {
+            locals,
+            data,
+            current: page,
+            nextPage: hasNextPage ? nextPage : null,
+            // nextPage只是一个页码，实际上提供数据的一直是data，根据page不同，提供不同的数据
+            currentRoute: '/'
+        });
+
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  
-  });
+
+});
 
 // blog路由
 router.get('/blog', async (req, res) => {
-try {  
-    let perPage = 7;
-    let page = req.query.page || 1;
-    // 分页设计：每页显示5条，根据创建时间排序，显示最新的5条
-    // 如果后边还有,那么就显示上一页的链接，到第二页，依次增加
+    try {
+        let perPage = 7;
+        let page = req.query.page || 1;
+        // 分页设计：每页显示5条，根据创建时间排序，显示最新的5条
+        // 如果后边还有,那么就显示上一页的链接，到第二页，依次增加
 
-    // 最前面一页的数据
-    const data = await Post.aggregate([ { $sort: { createdAt: -1 } } ])
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .exec();
+        // 最前面一页的数据
+        const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+            .skip(perPage * page - perPage)
+            .limit(perPage)
+            .exec();
 
-    // Count is deprecated - please use countDocuments
-    // const count = await Post.count();
-    const count = await Post.countDocuments({});
-    const nextPage = parseInt(page) + 1;
-    const hasNextPage = nextPage <= Math.ceil(count / perPage);
-    // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
-    res.render('blog', { 
-    data,
-    current: page,
-    nextPage: hasNextPage ? nextPage : null,
-    // nextPage只是一个页码，实际上提供数据的一直是data，根据page不同，提供不同的数据
-    currentRoute: '/blog'
-    });
+        // Count is deprecated - please use countDocuments
+        // const count = await Post.count();
+        const count = await Post.countDocuments({});
+        const nextPage = parseInt(page) + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
+        res.render('blog', {
+            data,
+            current: page,
+            nextPage: hasNextPage ? nextPage : null,
+            // nextPage只是一个页码，实际上提供数据的一直是data，根据page不同，提供不同的数据
+            currentRoute: '/blog'
+        });
 
-} catch (error) {
-    console.log(error);
-}
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+/*
+    / get
+    / Post
+*/
+// 帖子路由
+router.get('/post/:id', async (req, res) => {
+    try {
+        let slug = req.params.id;
+        const data = await Post.findById({ _id: slug });
+        const locals = {
+            title: data.title,  // 放置当前post的title
+            description: "Simple Blog created with NodeJs, Express & MongoDb.",
+        }
+
+        res.render('post', {
+            locals,
+            data,
+            currentRoute: `/post/${slug}`
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+/*
+    / post
+    / searchTerm
+*/
+// 搜索路由
+router.post('/search', async (req, res) => {
+    try {
+        const locals = {
+            title: "search",  // 放置当前post的title
+            description: "Simple Blog created with NodeJs, Express & MongoDb.",
+        }
+
+        let searchTerm = req.body.searchTerm;
+        // 去除特殊字符
+        const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g,"")
+
+        const data = await Post.find({
+            $or: [ //$or: [ ... ]: 表示只要有一个条件满足即可
+                // 创建了一个不区分大小写的正则表达式对象，搜索title中带有searchNoSpecialChar的文档
+                {title: { $regex: new RegExp(searchTerm,'i') }}, 
+                // 创建了一个不区分大小写的正则表达式对象，搜索body中带有searchNoSpecialChar的文档
+                {body: { $regex: new RegExp(searchTerm,'i') }}
+            ]
+        })
+        console.log(searchTerm);
+        // render是指渲染的目标🎯，这里为了避免混淆，使用result
+        res.render("result",{
+            data,
+            locals
+        });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 
@@ -163,12 +222,12 @@ try {
 
 
 // About路由
-router.get('/about',(req,res) => {
+router.get('/about', (req, res) => {
     res.render('about');
 })
 
 // Contact
-router.get('/contact',(req,res) => {
+router.get('/contact', (req, res) => {
     res.render('contact');
 })
 

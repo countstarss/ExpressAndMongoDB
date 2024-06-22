@@ -7,10 +7,15 @@ const connectDB = require('./server/config/db');
 
 
 const app = express();
-const PORT = 9000 || process.env.PORT;
+const PORT = 1341 || process.env.PORT;
 
 // connect to DB
 connectDB();
+
+// 使我们能够传递数据
+app.use(express.urlencoded({extended :true}));
+// 使我们能够通过表单传递数据
+app.use(express.json());
 
 app.use(express.static('public'));
 
@@ -22,6 +27,8 @@ app.set('view engine','ejs')
 
 // 导入路由
 app.use('/',require('./server/routes/main'));
+
+
 
 app.listen(PORT,() => {
     console.log(`app listening on port ${PORT}`);

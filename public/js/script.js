@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function(){
       searchInput.focus();
     });
   }
-
+  // Close按键的动作
   searchClose.addEventListener('click', function() {
     searchBar.style.visibility = 'hidden';
     searchBar.classList.remove('open');
