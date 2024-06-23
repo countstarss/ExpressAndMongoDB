@@ -64,7 +64,10 @@ const authMiddleware = (req,res,next) => {
 
     if(!token) {
         // 这些返回的消息都可以改成对应的页面，并提供返回链接
-        return res.status(401).json({ message:'Unauthorized' });
+        res.redirect('/admin');
+        return "";
+        // return res.status(401).json({ message:'Unauthorized' });
+        
     }
 
     try {
@@ -89,19 +92,40 @@ const authMiddleware = (req,res,next) => {
   * GET /
   * Admin - DashBoard/
 */
+// dashboard和编辑，删除功能只有拥有权限时，才会生效
 router.get('/dashboard',authMiddleware,async (req,res) => {
     try {
         const locals = {
-            title: "Admin Panel",
-            description : "Simple blog create with NodeJs, express & MongoDB",
+          title: "Admin Panel",
+          description : "Simple blog create with NodeJs, express & MongoDB",
         }
 
-        const data = await Post.find();
+        let perPage = 9;
+        let page = req.query.page || 1;
+        // 分页设计：每页显示9条，根据创建时间排序，显示最新的5条
+        // 如果后边还有,那么就显示上一页的链接，到第二页，依次增加
+
+        // 最前面一页的数据
+        const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+            .skip(perPage * page - perPage)
+            .limit(perPage)
+            .exec();
+
+        // Count is deprecated - please use countDocuments
+        // const count = await Post.count();
+        const count = await Post.countDocuments({});
+        const nextPage = parseInt(page) + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        // 最后一页一定是小于或者等于perPage，之所以用ceil是因为，就算多出一个，也要多增加一页
+      // ===============
         // 需要指定layout
         res.render('admin/dashBoard',{ 
-            locals , 
-            data,
-            layout:adminLayout}
+          locals,
+          data,
+          current: page,
+          nextPage: hasNextPage ? nextPage : null,
+            layout:adminLayout
+          }
         );
     }catch(error) {
         return res.status(400).json({ message:'Unauthorized' });
@@ -159,6 +183,80 @@ router.post('/add-post', authMiddleware, async (req, res) => {
     }
   });
   
+/* 
+  * GET /
+  * Admin - Edit post/
+*/
+router.get('/edit-post/:id',authMiddleware,async (req,res) => {
+    try {
+        const slug = req.params.id;
+        const locals = {
+            title: "Edit post",
+            description : "Simple blog create with NodeJs, express & MongoDB",
+        }
+        const data = await Post.findOne({ _id:req.params.id });
+        // 需要指定layout
+        res.render('admin/edit-post',{ 
+            locals , 
+            data,
+            layout:adminLayout,
+            // currentRoute: `/edit-post/${slug}`
+        }
+        );
+    }catch(error) {
+        return res.status(400).json({ message:'Unauthorized' });
+    
+    } 
+});
+
+
+
+/* 
+  * PUT /
+  * Admin - Edit post/
+*/
+router.put('/edit-post/:id',authMiddleware,async (req,res) => {
+    try {
+
+        await Post.findByIdAndUpdate(req.params.id,{
+            title:req.body.title,
+            body:req.body.body,
+            updatedAt:Date.now()
+        });
+        // 需要指定layout
+        res.redirect(`/edit-post/${req.params.id}`);
+    }catch(error) {
+        return res.status(400).json({ message:'Unauthorized' });
+    
+    } 
+});
+
+/* 
+  * POST /
+  * Admin - Delete post/
+*/
+// 注意使用的方法
+router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
+
+  try {
+    await Post.deleteOne( { _id: req.params.id } );
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/* 
+  * GET /
+  * Admin - Logout/
+*/
+router.get('/logout',(req,res) => {
+  res.clearCookie('token');
+  // res.json({ message:"logout successfully" });
+  res.redirect('/');
+});
+
+
 
 
 /* 

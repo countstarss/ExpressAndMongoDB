@@ -44,3 +44,10 @@ document.addEventListener('DOMContentLoaded', function(){
     this.setAttribute('aria-expanded', 'false');
   });
 });
+
+// 快速返回
+function goBack() {
+  setTimeout(() => {
+    window.history.back();
+  }, 300);
+}

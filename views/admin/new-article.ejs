@@ -1,13 +1,9 @@
-<h1>About</h1>
 <textarea id="editor"></textarea>
 <script>
     ClassicEditor
         .create(document.querySelector('#editor'))
         .then(editor => {
             console.log('Editor was initialized', editor);
-
-            editor.ui.view.editable.style.height = '400px';
-            editor.ui.view.editable.style.width = '100%';
         })
         .catch(error => {
             console.error('Editor initialization failed', error);

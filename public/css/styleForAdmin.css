@@ -64,6 +64,14 @@ textarea {
   background-color: var(--red);
 }
 
+.btn-add {
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  background-color: var(--black);
+  margin-top: 10px;
+}
 img {
   width: 100%;
   height: auto;
@@ -78,6 +86,7 @@ img {
 
 .main {
   padding: 20px 0;
+  height: 650px;
 }
 
 /* Hero-section */
@@ -176,7 +185,7 @@ img {
 }
 
 /* Author - HomePage */
-.author {
+.author,.signin,.signup {
   padding: 10px 0;
   text-align: center;
 }
@@ -352,4 +361,15 @@ img {
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+}
+
+
+/* 富文本框的大小设置 */
+
+.ck-content{
+  height: 400px;
+}
+
+#post-content {
+  white-space: pre-wrap;
 }
